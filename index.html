@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>JOYOR 2026年3月全维度运营月报</title>
+    <style>
+        body { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; background-color: #f5f7fa; padding: 30px; color: #333; }
+        .report-wrapper { background: #fff; max-width: 1100px; margin: 0 auto; padding: 40px; border-radius: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #1a73e8; font-size: 28px; margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        h2 { color: #2c3e50; border-left: 6px solid #1a73e8; padding-left: 15px; margin-top: 50px; font-size: 20px; }
+        
+        /* 仪表盘 */
+        .gauge-section { display: flex; justify-content: space-around; margin: 30px 0 60px; }
+        .gauge-card { text-align: center; width: 220px; }
+        .circle-outer { width: 160px; height: 160px; border-radius: 50%; border: 12px solid #eef2f7; position: relative; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; }
+        .circle-roi { border-top-color: #34a853; border-right-color: #34a853; border-bottom-color: #34a853; transform: rotate(45deg); }
+        .circle-sales { border-top-color: #4285f4; border-right-color: #4285f4; }
+        .circle-cost { border-top-color: #ea4335; }
+        .val { font-size: 24px; font-weight: bold; transform: rotate(0deg); }
+        .roi-val { transform: rotate(-45deg); color: #188038; }
+        .label { font-size: 14px; color: #666; font-weight: bold; }
+
+        /* 柱状图 */
+        .chart-box { height: 350px; display: flex; align-items: flex-end; justify-content: space-around; border-bottom: 2px solid #444; margin: 40px 60px 60px; position: relative; }
+        .bar-wrap { display: flex; flex-direction: column; align-items: center; width: 120px; }
+        .bar { width: 45px; position: relative; }
+        .bg-google { background: linear-gradient(to top, #4285f4, #669df6); }
+        .bg-fb { background: linear-gradient(to top, #ea4335, #f28b82); }
+        .bar-num { position: absolute; top: -25px; width: 100%; text-align: center; font-weight: bold; font-size: 13px; }
+        .bar-name { margin-top: 15px; font-size: 13px; font-weight: bold; }
+        .line-10 { position: absolute; width: 100%; border-top: 2px dashed #d93025; bottom: 80px; left: 0; z-index: 1; }
+        .line-txt { position: absolute; right: -90px; bottom: 75px; color: #d93025; font-size: 12px; font-weight: bold; }
+
+        /* 数据表格 */
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 12px; }
+        th, td { border: 1px solid #dee2e6; padding: 10px 5px; text-align: center; }
+        th { background-color: #f8f9fa; color: #495057; font-weight: 700; }
+        .row-summary { background-color: #fff9e6; font-weight: bold; }
+        .accent { color: #1a73e8; font-weight: bold; }
+        .warn-txt { color: #d93025; }
+    </style>
+</head>
+<body>
+
+<div class="report-wrapper">
+    <h1>JOYOR 2026年3月全球站运营深度分析报告</h1>
+
+    <div class="gauge-section">
+        <div class="gauge-card">
+            <div class="circle-outer circle-sales"><div class="val" style="color:#4285f4">$12,772.7</div></div>
+            <div class="label">实际总销售额 (退款后)</div>
+        </div>
+        <div class="gauge-card">
+            <div class="circle-outer circle-roi"><div class="val roi-val">4.15</div></div>
+            <div class="label">全站总 ROI</div>
+        </div>
+        <div class="gauge-card">
+            <div class="circle-outer circle-cost"><div class="val" style="color:#ea4335">$3,078.75</div></div>
+            <div class="label">推广总成本</div>
+        </div>
+    </div>
+
+    <h2>一、 渠道 ROI 深度诊断 (ROI 1.0 预警)</h2>
+    <div class="chart-box">
+        <div class="line-10"></div><div class="line-txt">ROI 1.0 止损线</div>
+        
+        <div class="bar-wrap">
+            <div class="bar bg-google" style="height: 256px;"><div class="bar-num">4.28</div></div>
+            <div class="bar-name">US Google</div>
+        </div>
+        <div class="bar-wrap">
+            <div class="bar bg-fb" style="height: 48px;"><div class="bar-num">0.82</div></div>
+            <div class="bar-name warn-txt">US FB (亏损)</div>
+        </div>
+        <div class="bar-wrap">
+            <div class="bar bg-google" style="height: 219px;"><div class="bar-num">3.65</div></div>
+            <div class="bar-name">EU Google</div>
+        </div>
+        <div class="bar-wrap">
+            <div class="bar bg-fb" style="height: 178px;"><div class="bar-num">2.97</div></div>
+            <div class="bar-name">EU FB</div>
+        </div>
+    </div>
+
+    <h2>二、 全站月度汇总数据 (W1-W4)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>日期周期</th>
+                <th>3月汇总</th>
+                <th>第一周(1-7日)</th>
+                <th>第二周(8-14日)</th>
+                <th>第三周(15-21日)</th>
+                <th>第四周(22-28日)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>推广总成本</td><td>$3,078.75</td><td>1110.89</td><td>859.54</td><td>1108.32</td><td>0</td></tr>
+            <tr><td>推广总销售</td><td>$10,056.66</td><td>$4,444.71</td><td>$2,868.05</td><td>$2,743.90</td><td>$0.00</td></tr>
+            <tr><td>推广ROI</td><td>3.27</td><td>4</td><td>3.34</td><td>2.48</td><td>#DIV/0!</td></tr>
+            <tr class="row-summary"><td>实际总销售额(退款后)</td><td class="accent">12772.7</td><td>5512.24</td><td>4102.93</td><td>3157.53</td><td>0</td></tr>
+            <tr class="row-summary"><td>总ROI</td><td class="accent">4.15</td><td>4.96</td><td>4.77</td><td>2.85</td><td>#DIV/0!</td></tr>
+        </tbody>
+    </table>
+
+    <h2>三、 JOYOR_US 美国站明细</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>指标项</th>
+                <th>3月汇总</th>
+                <th>第一周</th>
+                <th>第二周</th>
+                <th>第三周</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>访客量</td><td>5068</td><td>1725</td><td>1611</td><td>1732</td></tr>
+            <tr><td>转化率</td><td>0.63%</td><td>0.41%</td><td>0.87%</td><td>0.64%</td></tr>
+            <tr><td>客单价 USD</td><td>168.3875</td><td>265.0285714</td><td>139.9357143</td><td>143.1</td></tr>
+            <tr><td>官网总订单量</td><td>32</td><td>7</td><td>14</td><td>11</td></tr>
+            <tr><td>销售额 USD</td><td>$5,388.40</td><td>$1,855.20</td><td>$1,959.10</td><td>$1,574.10</td></tr>
+            <tr><td>Google ROI</td><td>4.275151623</td><td>4.074853715</td><td>3.159078423</td><td>5.411329681</td></tr>
+            <tr><td>FB ROI</td><td>0.815295585</td><td>0.526315789</td><td>0</td><td>1.931247586</td></tr>
+        </tbody>
+    </table>
+
+    <h2>四、 JOYOR_EU 欧洲站明细</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>指标项</th>
+                <th>3月汇总</th>
+                <th>第一周</th>
+                <th>第二周</th>
+                <th>第三周</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>访客量</td><td>6889</td><td>2251</td><td>2109</td><td>2529</td></tr>
+            <tr><td>转化率</td><td>0.26%</td><td>0.44%</td><td>0.19%</td><td>0.16%</td></tr>
+            <tr><td>客单价 USD</td><td>410.2388889</td><td>365.704</td><td>535.9575</td><td>395.8575</td></tr>
+            <tr><td>官网总订单量</td><td>18</td><td>10</td><td>4</td><td>4</td></tr>
+            <tr><td>销售额 USD</td><td>$7,384.30</td><td>$3,657.04</td><td>$2,143.83</td><td>$1,583.43</td></tr>
+            <tr><td>Google ROI</td><td>3.654505206</td><td>1.784380107</td><td>10.27078994</td><td>0</td></tr>
+            <tr><td>FB ROI</td><td>2.968876323</td><td>5.284109064</td><td>0.090461717</td><td>1.755953942</td></tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
