@@ -2,151 +2,249 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>JOYOR 2026年3月全维度运营月报</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOYOR 3月全维度运营审计报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; background-color: #f5f7fa; padding: 30px; color: #333; }
-        .report-wrapper { background: #fff; max-width: 1100px; margin: 0 auto; padding: 40px; border-radius: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #1a73e8; font-size: 28px; margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
-        h2 { color: #2c3e50; border-left: 6px solid #1a73e8; padding-left: 15px; margin-top: 50px; font-size: 20px; }
+        :root { --fb-blue: #1877F2; --fb-green: #42b72a; --fb-red: #fa3e3e; --fb-gray: #65676b; --bg: #f0f2f5; --google-blue: #4285f4; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: #1c1e21; margin: 0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .card { background: #fff; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+        .header-main { text-align: center; padding: 35px; background: linear-gradient(135deg, #1877F2 0%, #0a4da0 100%); color: white; border-radius: 12px; margin-bottom: 30px; }
+        .section-title { border-left: 6px solid var(--fb-blue); padding-left: 15px; margin: 40px 0 20px; color: #333; font-size: 22px; }
         
-        /* 仪表盘 */
-        .gauge-section { display: flex; justify-content: space-around; margin: 30px 0 60px; }
-        .gauge-card { text-align: center; width: 220px; }
-        .circle-outer { width: 160px; height: 160px; border-radius: 50%; border: 12px solid #eef2f7; position: relative; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; }
+        /* 表格样式 */
+        .table-wrapper { overflow-x: auto; margin-top: 15px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px; }
+        th, td { border: 1px solid #dee2e6; padding: 12px 8px; text-align: center; }
+        th { background: #f8f9fa; color: var(--fb-gray); }
+        .row-total, .row-summary { background: #f1f8ff; font-weight: bold; }
+        .accent { color: #1a73e8; font-weight: bold; }
+        
+        /* 图表布局 */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 20px; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        .up { background: #e7f3ff; color: var(--fb-blue); }
+        .down { background: #fff1f0; color: var(--fb-red); }
+        .analysis-box { background: #f9fafb; border: 1px solid #e5e7eb; padding: 20px; border-radius: 8px; font-size: 14px; }
+
+        /* 第二部分财务仪表盘 */
+        .gauge-section { display: flex; justify-content: space-around; margin: 30px 0; flex-wrap: wrap; }
+        .gauge-card { text-align: center; width: 220px; margin-bottom: 20px; }
+        .circle-outer { width: 150px; height: 150px; border-radius: 50%; border: 10px solid #eef2f7; position: relative; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; }
         .circle-roi { border-top-color: #34a853; border-right-color: #34a853; border-bottom-color: #34a853; transform: rotate(45deg); }
         .circle-sales { border-top-color: #4285f4; border-right-color: #4285f4; }
         .circle-cost { border-top-color: #ea4335; }
-        .val { font-size: 24px; font-weight: bold; transform: rotate(0deg); }
+        .val { font-size: 22px; font-weight: bold; transform: rotate(0deg); }
         .roi-val { transform: rotate(-45deg); color: #188038; }
-        .label { font-size: 14px; color: #666; font-weight: bold; }
-
-        /* 柱状图 */
-        .chart-box { height: 350px; display: flex; align-items: flex-end; justify-content: space-around; border-bottom: 2px solid #444; margin: 40px 60px 60px; position: relative; }
-        .bar-wrap { display: flex; flex-direction: column; align-items: center; width: 120px; }
-        .bar { width: 45px; position: relative; }
-        .bg-google { background: linear-gradient(to top, #4285f4, #669df6); }
-        .bg-fb { background: linear-gradient(to top, #ea4335, #f28b82); }
-        .bar-num { position: absolute; top: -25px; width: 100%; text-align: center; font-weight: bold; font-size: 13px; }
-        .bar-name { margin-top: 15px; font-size: 13px; font-weight: bold; }
-        .line-10 { position: absolute; width: 100%; border-top: 2px dashed #d93025; bottom: 80px; left: 0; z-index: 1; }
-        .line-txt { position: absolute; right: -90px; bottom: 75px; color: #d93025; font-size: 12px; font-weight: bold; }
-
-        /* 数据表格 */
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 12px; }
-        th, td { border: 1px solid #dee2e6; padding: 10px 5px; text-align: center; }
-        th { background-color: #f8f9fa; color: #495057; font-weight: 700; }
-        .row-summary { background-color: #fff9e6; font-weight: bold; }
-        .accent { color: #1a73e8; font-weight: bold; }
-        .warn-txt { color: #d93025; }
+        
+        /* 文字总结样式 */
+        .summary-text-box { background: #fff; padding: 30px; border-radius: 12px; border-top: 5px solid #1a73e8; margin-top: 30px; }
+        .plan-item { margin-bottom: 20px; border-left: 4px solid #34a853; padding-left: 15px; }
     </style>
 </head>
 <body>
 
-<div class="report-wrapper">
-    <h1>JOYOR 2026年3月全球站运营深度分析报告</h1>
+<div class="container">
+    <div class="header-main">
+        <h1>JOYOR 2026年3月全维度运营分析报告</h1>
+        <p>数据周期：2026/03/01 - 2026/03/21</p>
+    </div>
 
-    <div class="gauge-section">
-        <div class="gauge-card">
-            <div class="circle-outer circle-sales"><div class="val" style="color:#4285f4">$12,772.7</div></div>
-            <div class="label">实际总销售额 (退款后)</div>
+    <h2 class="section-title">第一板块：社媒成效分析 (流量与引流)</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>核心流量趋势 (Reach & Impressions)</h3>
+            <canvas id="performanceChart"></canvas>
         </div>
-        <div class="gauge-card">
-            <div class="circle-outer circle-roi"><div class="val roi-val">4.15</div></div>
-            <div class="label">全站总 ROI</div>
-        </div>
-        <div class="gauge-card">
-            <div class="circle-outer circle-cost"><div class="val" style="color:#ea4335">$3,078.75</div></div>
-            <div class="label">推广总成本</div>
+        <div class="card">
+            <h3>成效分析复盘</h3>
+            <div class="analysis-box">
+                <strong>1. 流量V型反转：</strong> W2在首周爆款结束后出现34%的自然回落，但W3成功收复失地，浏览量回升至6.8万次。<br>
+                <strong>2. 引流效率惊人：</strong> 三周累计输送 <strong>4,777</strong> 次潜在链接点击。点击率(CTR)稳定在 2.48% 左右。
+            </div>
         </div>
     </div>
 
-    <h2>一、 渠道 ROI 深度诊断 (ROI 1.0 预警)</h2>
-    <div class="chart-box">
-        <div class="line-10"></div><div class="line-txt">ROI 1.0 止损线</div>
-        
-        <div class="bar-wrap">
-            <div class="bar bg-google" style="height: 256px;"><div class="bar-num">4.28</div></div>
-            <div class="bar-name">US Google</div>
-        </div>
-        <div class="bar-wrap">
-            <div class="bar bg-fb" style="height: 48px;"><div class="bar-num">0.82</div></div>
-            <div class="bar-name warn-txt">US FB (亏损)</div>
-        </div>
-        <div class="bar-wrap">
-            <div class="bar bg-google" style="height: 219px;"><div class="bar-num">3.65</div></div>
-            <div class="bar-name">EU Google</div>
-        </div>
-        <div class="bar-wrap">
-            <div class="bar bg-fb" style="height: 178px;"><div class="bar-num">2.97</div></div>
-            <div class="bar-name">EU FB</div>
+    <div class="card">
+        <h3>📊 成效分析原始数据审计</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr><th>统计周期</th><th>浏览量</th><th>浏览人数</th><th>链接点击量</th><th>互动次数</th><th>访问量</th><th>点击率 (CTR)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>W1 (3.01-3.07)</td><td>75,013</td><td>32,000</td><td>1,992</td><td>677</td><td>506</td><td>2.65%</td></tr>
+                    <tr><td>W2 (3.08-3.14)</td><td>49,000</td><td>26,000</td><td>1,111</td><td>174</td><td>340</td><td>2.26%</td></tr>
+                    <tr><td>W3 (3.15-3.21)</td><td>68,000</td><td>34,000</td><td>1,674</td><td>377</td><td>442</td><td>2.46%</td></tr>
+                    <tr class="row-total"><td>三周累计 (Total)</td><td>192,013</td><td>92,000</td><td>4,777</td><td>1,228</td><td>1,288</td><td>2.48%</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <h2>二、 全站月度汇总数据 (W1-W4)</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>日期周期</th>
-                <th>3月汇总</th>
-                <th>第一周(1-7日)</th>
-                <th>第二周(8-14日)</th>
-                <th>第三周(15-21日)</th>
-                <th>第四周(22-28日)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>推广总成本</td><td>$3,078.75</td><td>1110.89</td><td>859.54</td><td>1108.32</td><td>0</td></tr>
-            <tr><td>推广总销售</td><td>$10,056.66</td><td>$4,444.71</td><td>$2,868.05</td><td>$2,743.90</td><td>$0.00</td></tr>
-            <tr><td>推广ROI</td><td>3.27</td><td>4</td><td>3.34</td><td>2.48</td><td>#DIV/0!</td></tr>
-            <tr class="row-summary"><td>实际总销售额(退款后)</td><td class="accent">12772.7</td><td>5512.24</td><td>4102.93</td><td>3157.53</td><td>0</td></tr>
-            <tr class="row-summary"><td>总ROI</td><td class="accent">4.15</td><td>4.96</td><td>4.77</td><td>2.85</td><td>#DIV/0!</td></tr>
-        </tbody>
-    </table>
+    <h2 class="section-title">第二板块：受众趋势分析 (粉丝与粘性)</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>粉丝留存波动 (Audience Growth)</h3>
+            <canvas id="audienceChart"></canvas>
+        </div>
+        <div class="card">
+            <h3>受众健康度总结</h3>
+            <div class="analysis-box">
+                <strong>1. 粉丝质量清洗：</strong> W2出现16人取关。但W3通过单周12次新关注（↑140%）止跌回升。<br>
+                <strong>2. 粘性待提升：</strong> 活跃粉丝约40人，“回头观众”为0，账号处于纯拉新阶段。
+            </div>
+        </div>
+    </div>
 
-    <h2>三、 JOYOR_US 美国站明细</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>指标项</th>
-                <th>3月汇总</th>
-                <th>第一周</th>
-                <th>第二周</th>
-                <th>第三周</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>访客量</td><td>5068</td><td>1725</td><td>1611</td><td>1732</td></tr>
-            <tr><td>转化率</td><td>0.63%</td><td>0.41%</td><td>0.87%</td><td>0.64%</td></tr>
-            <tr><td>客单价 USD</td><td>168.3875</td><td>265.0285714</td><td>139.9357143</td><td>143.1</td></tr>
-            <tr><td>官网总订单量</td><td>32</td><td>7</td><td>14</td><td>11</td></tr>
-            <tr><td>销售额 USD</td><td>$5,388.40</td><td>$1,855.20</td><td>$1,959.10</td><td>$1,574.10</td></tr>
-            <tr><td>Google ROI</td><td>4.275151623</td><td>4.074853715</td><td>3.159078423</td><td>5.411329681</td></tr>
-            <tr><td>FB ROI</td><td>0.815295585</td><td>0.526315789</td><td>0</td><td>1.931247586</td></tr>
-        </tbody>
-    </table>
+    <div class="card">
+        <h3>📊 受众趋势原始数据审计</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr><th>统计周期</th><th>关注数</th><th>取消关注</th><th>净关注</th><th>活跃粉丝数</th><th>消息联系人</th><th>回头观众</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>W1</td><td>8</td><td>4</td><td><span class="badge up">+4</span></td><td>50</td><td>1</td><td>0</td></tr>
+                    <tr><td>W2</td><td>5</td><td>16</td><td><span class="badge down">-11</span></td><td>34</td><td>0</td><td>0</td></tr>
+                    <tr><td>W3</td><td>12</td><td>9</td><td><span class="badge up">+3</span></td><td>38</td><td>0</td><td>0</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <h2>四、 JOYOR_EU 欧洲站明细</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>指标项</th>
-                <th>3月汇总</th>
-                <th>第一周</th>
-                <th>第二周</th>
-                <th>第三周</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>访客量</td><td>6889</td><td>2251</td><td>2109</td><td>2529</td></tr>
-            <tr><td>转化率</td><td>0.26%</td><td>0.44%</td><td>0.19%</td><td>0.16%</td></tr>
-            <tr><td>客单价 USD</td><td>410.2388889</td><td>365.704</td><td>535.9575</td><td>395.8575</td></tr>
-            <tr><td>官网总订单量</td><td>18</td><td>10</td><td>4</td><td>4</td></tr>
-            <tr><td>销售额 USD</td><td>$7,384.30</td><td>$3,657.04</td><td>$2,143.83</td><td>$1,583.43</td></tr>
-            <tr><td>Google ROI</td><td>3.654505206</td><td>1.784380107</td><td>10.27078994</td><td>0</td></tr>
-            <tr><td>FB ROI</td><td>2.968876323</td><td>5.284109064</td><td>0.090461717</td><td>1.755953942</td></tr>
-        </tbody>
-    </table>
+    <h2 class="section-title">第三板块：全球站月度汇总数据 (财务大盘)</h2>
+    <div class="card">
+        <div class="gauge-section">
+            <div class="gauge-card">
+                <div class="circle-outer circle-sales"><div class="val" style="color:#4285f4">$12,772.7</div></div>
+                <div class="label">实际总销售额 (退款后)</div>
+            </div>
+            <div class="gauge-card">
+                <div class="circle-outer circle-roi"><div class="val roi-val">4.15</div></div>
+                <div class="label">全站总 ROI</div>
+            </div>
+            <div class="gauge-card">
+                <div class="circle-outer circle-cost"><div class="val" style="color:#ea4335">$3,078.75</div></div>
+                <div class="label">推广总成本</div>
+            </div>
+        </div>
 
+        <h3>一、 全站月度汇总数据 (W1-W4)</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr><th>日期周期</th><th>3月汇总</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>推广总成本</td><td>$3,078.75</td><td>1110.89</td><td>859.54</td><td>1108.32</td><td>0</td></tr>
+                    <tr><td>推广总销售</td><td>$10,056.66</td><td>$4,444.71</td><td>$2,868.05</td><td>$2,743.90</td><td>$0.00</td></tr>
+                    <tr><td>推广ROI</td><td>3.27</td><td>4</td><td>3.34</td><td>2.48</td><td>#DIV/0!</td></tr>
+                    <tr class="row-summary"><td>实际总销售额(退款后)</td><td class="accent">12772.7</td><td>5512.24</td><td>4102.93</td><td>3157.53</td><td>0</td></tr>
+                    <tr class="row-summary"><td>总ROI</td><td class="accent">4.15</td><td>4.96</td><td>4.77</td><td>2.85</td><td>#DIV/0!</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>二、 JOYOR_US 美国站明细</h3>
+            <table>
+                <thead><tr><th>指标项</th><th>3月汇总</th><th>第一周</th><th>第二周</th><th>第三周</th></tr></thead>
+                <tbody>
+                    <tr><td>访客量</td><td>5068</td><td>1725</td><td>1611</td><td>1732</td></tr>
+                    <tr><td>转化率</td><td>0.63%</td><td>0.41%</td><td>0.87%</td><td>0.64%</td></tr>
+                    <tr><td>订单量</td><td>32</td><td>7</td><td>14</td><td>11</td></tr>
+                    <tr><td>销售额</td><td>$5,388.40</td><td>$1,855.20</td><td>$1,959.10</td><td>$1,574.10</td></tr>
+                    <tr><td>Google ROI</td><td class="accent">4.27</td><td>4.07</td><td>3.15</td><td>5.41</td></tr>
+                    <tr><td>FB ROI</td><td class="warn-txt">0.81</td><td>0.52</td><td>0</td><td>1.93</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card">
+            <h3>三、 JOYOR_EU 欧洲站明细</h3>
+            <table>
+                <thead><tr><th>指标项</th><th>3月汇总</th><th>第一周</th><th>第二周</th><th>第三周</th></tr></thead>
+                <tbody>
+                    <tr><td>访客量</td><td>6889</td><td>2251</td><td>2109</td><td>2529</td></tr>
+                    <tr><td>转化率</td><td>0.26%</td><td>0.44%</td><td>0.19%</td><td>0.16%</td></tr>
+                    <tr><td>订单量</td><td>18</td><td>10</td><td>4</td><td>4</td></tr>
+                    <tr><td>销售额</td><td>$7,384.30</td><td>$3,657.04</td><td>$2,143.83</td><td>$1,583.43</td></tr>
+                    <tr><td>Google ROI</td><td class="accent">3.65</td><td>1.78</td><td>10.27</td><td>0</td></tr>
+                    <tr><td>FB ROI</td><td class="accent">2.96</td><td>5.28</td><td>0.09</td><td>1.75</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="summary-text-box">
+        <h2 style="border:none; padding:0; margin-bottom:20px;">📊 3 月份运营总结</h2>
+        <p><strong>流量表现与红人联动：</strong> 3 月前三周累计获得 19.2 万次浏览，流量峰值与红人发帖高度同步。特别是 3 月 19 日 匈牙利红人发帖后，直接驱动了第三周浏览量回升 38.2%。</p>
+        <p><strong>引流效率与转化瓶颈：</strong> 全站点击率（CTR）表现优异，平均达 2.48%。</p>
+        <p><strong>受众粘性与结构痛点：</strong> 第三周净关注数量转正（+3），“回头观众”依然为 0（在电动车行业属于正常现象，主要目标是新客户。）</p>
+        <p><strong>红人执行进度：</strong> 已合作 30 位红人，已完成发帖 27 位（执行率 90%），尚余 3 位待收官。</p>
+        <p><strong>网站内容：</strong> 优化了页面描述，增加关键词埋伏以对应谷歌引擎的 SEO 逻辑优化。</p>
+
+        <h2 style="border:none; padding:0; margin:30px 0 20px;">📅 4 月行动计划：精细运营</h2>
+        <div class="plan-item">
+            <strong>1. 针对 US：</strong> FB 预算调优，首周削减美国站 FB 预算 30%-50%，淘汰低 ROI 素材。预算倾斜，将节省的资金流向表现更稳健的 Google 渠道。
+        </div>
+        <div class="plan-item">
+            <strong>2. 针对 EU：</strong> 排查与加强，逐步分析并检查，优化成效最低的 Google Pmax 广告。内容方面增加本地化 VAE（电动助力车）内容。
+        </div>
+        <div class="plan-item">
+            <strong>3. 素材迭代与内容 SEO：</strong> 广告防疲劳，尝试“产品性能对比”素材。SEO 协同，持续优化法、德语站点的 VAE 关键词布局。持续监督促剩余 3 位红人发帖。
+        </div>
+    </div>
 </div>
+
+<script>
+    const labels = ['第一周 (W1)', '第二周 (W2)', '第三周 (W3)'];
+    new Chart(document.getElementById('performanceChart'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '浏览量',
+                data: [75013, 49000, 68000],
+                borderColor: '#1877F2',
+                backgroundColor: 'rgba(24, 119, 242, 0.1)',
+                fill: true,
+                tension: 0.3
+            }, {
+                label: '链接点击',
+                data: [1992, 1111, 1674],
+                borderColor: '#42b72a',
+                borderDash: [5, 5],
+                tension: 0.3
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('audienceChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '新关注',
+                data: [8, 5, 12],
+                backgroundColor: '#1877F2'
+            }, {
+                label: '取消关注',
+                data: [4, 16, 9],
+                backgroundColor: '#fa3e3e'
+            }, {
+                label: '净关注',
+                data: [4, -11, 3],
+                type: 'line',
+                borderColor: '#42b72a',
+                borderWidth: 3,
+                tension: 0.3
+            }]
+        }
+    });
+</script>
 </body>
 </html>
